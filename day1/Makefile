@@ -1,23 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: fra <fra@student.codam.nl>                   +#+                      #
-#                                                    +#+                       #
-#    Created: 2023/10/05 21:08:47 by fra           #+#    #+#                  #
-#    Updated: 2023/12/01 15:31:47 by faru          ########   odam.nl          #
-#                                                                              #
-# **************************************************************************** #
-
 SHELL := /bin/bash
 
+MAIN := main.cpp
 SRC_P1 := part1
 SRC_P2 := part2
-SOURCES_P1 := $(wildcard $(SRC_P1)/*.cpp)
-HEADERS_P1 := $(wildcard $(SRC_P1)/*.hpp)
-SOURCES_P2 := $(wildcard $(SRC_P2)/*.cpp)
-HEADERS_P2 := $(wildcard $(SRC_P2)/*.hpp)
+MAIN_P1 := $(SRC_P1)/$(MAIN)
+MAIN_P2 := $(SRC_P2)/$(MAIN)
 PART1 := $(SRC_P1)/exe_part1
 PART2 := $(SRC_P2)/exe_part2
 INPUT := input_file
@@ -31,26 +18,26 @@ RESET = \x1b[0m
 
 all: $(PART1) $(PART2)
 
-$(PART1): $(SOURCES_P1) $(HEADERS_P1)
-	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(SOURCES_P1) -o $(PART1)
+$(PART1): $(MAIN_P1)
+	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(MAIN_P1) -o $(PART1)
 	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\n"
 
-$(PART2): $(SOURCES_P2) $(HEADERS_P2)
-	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(SOURCES_P2) -o $(PART2)
+$(PART2): $(MAIN_P2)
+	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(MAIN_P2) -o $(PART2)
 	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\n"
-
-part2: $(PART2)
-	@clear
-	@./$(PART2) input_file
 
 part1: $(PART1)
 	@clear
-	@./$(PART1) input_file
+	@./$(PART1) $(SRC_P1)/$(INPUT)
+
+part2: $(PART2)
+	@clear
+	@./$(PART2) $(SRC_P2)/$(INPUT)
 
 run: all
 	@clear
-	@./$(PART1) input_file
-	@./$(PART2) input_file
+	@./$(PART1) $(SRC_P1)/$(INPUT)
+	@./$(PART2) $(SRC_P2)/$(INPUT)
 
 clean:
 	@rm -f $(PART1)
@@ -59,3 +46,5 @@ clean:
 	@printf "(Advent of Code) $(RED)Removed program $(PART2)$(RESET)\n"
 
 re: clean all
+
+.PHONY: re clean all part1 part2 run

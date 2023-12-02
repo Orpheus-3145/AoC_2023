@@ -1,105 +1,130 @@
 #! /bin/bash
 
-newFolder=day$1
+MakefileContent=$'SHELL := /bin/bash
 
-MakefileContent='SHELL := /bin/bash\n\n
-SRC_P1 := part1\n
-SRC_P2 := part2\n
-SOURCES_P1 := $(wildcard $(SRC_P1)/*.cpp)\n
-HEADERS_P1 := $(wildcard $(SRC_P1)/*.hpp)\n
-SOURCES_P2 := $(wildcard $(SRC_P2)/*.cpp)\n
-HEADERS_P2 := $(wildcard $(SRC_P2)/*.hpp)\n
-PART1 := $(SRC_P1)/exe_part1\n
-PART2 := $(SRC_P2)/exe_part2\n
-INPUT := input_file\n\n
-PP := c++\n
-PP_FLAGS := -Wall -Wextra -Werror -Wshadow -Wpedantic -g3 -fsanitize=address\n
-\n
-GREEN = \x1b[32;01m\n
-RED = \x1b[31;01m\n
-RESET = \x1b[0m\n
-\n
-all: $(PART1) $(PART2)\n
-\n
-$(PART1): $(SOURCES_P1) $(HEADERS_P1)\n
-	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(SOURCES_P1) -o $(PART1)\n
-	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\n"\n
-\n
-$(PART2): $(SOURCES_P2) $(HEADERS_P2)\n
-	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(SOURCES_P2) -o $(PART2)\n
-	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\n"\n
-\n
-part2: $(PART2)\n
-	@clear\n
-	@./$(PART2) input_file\n
-\n
-part1: $(PART1)\n
-	@clear\n
-	@./$(PART1) input_file\n
-\n
-run: all\n
-	@clear\n
-	@./$(PART1) input_file\n
-	@./$(PART2) input_file\n
-\n
-clean:\n
-	@rm -f $(PART1)\n
-	@printf "(Advent of Code) $(RED)Removed program $(PART1)$(RESET)\n"\n
-	@rm -f $(PART2)\n
-	@printf "(Advent of Code) $(RED)Removed program $(PART2)$(RESET)\n"\n
-\n
-re: clean all'
+MAIN := main.cpp
+SRC_P1 := part1
+SRC_P2 := part2
+MAIN_P1 := $(SRC_P1)/$(MAIN)
+MAIN_P2 := $(SRC_P2)/$(MAIN)
+PART1 := $(SRC_P1)/exe_part1
+PART2 := $(SRC_P2)/exe_part2
+INPUT := input_file
 
-mainContent="#include \"part$PART.hpp\"
+PP := c++
+PP_FLAGS := -Wall -Wextra -Werror -Wshadow -Wpedantic -g3 -fsanitize=address
+''
+GREEN = \\''x1b[32;01m
+RED = \\''x1b[31;01m
+RESET = \\''x1b[0m
+
+all: $(PART1) $(PART2)
+
+$(PART1): $(MAIN_P1)
+	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(MAIN_P1) -o $(PART1)
+	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\\''n"
+
+$(PART2): $(MAIN_P2)
+	@$(PP) $(PP_FLAGS) $(DEBUG_FLAGS) $(MAIN_P2) -o $(PART2)
+	@printf "(Advent of Code) $(GREEN)Created program $@$(RESET)\\''n"
+
+part1: $(PART1)
+	@clear
+	@./$(PART1) $(SRC_P1)/$(INPUT)
+
+part2: $(PART2)
+	@clear
+	@./$(PART2) $(SRC_P2)/$(INPUT)
+
+run: all
+	@clear
+	@./$(PART1) $(SRC_P1)/$(INPUT)
+	@./$(PART2) $(SRC_P2)/$(INPUT)
+
+clean:
+	@rm -f $(PART1)
+	@printf "(Advent of Code) $(RED)Removed program $(PART1)$(RESET)\\n"
+	@rm -f $(PART2)
+	@printf "(Advent of Code) $(RED)Removed program $(PART2)$(RESET)\\n"
+
+re: clean all
+
+.PHONY: re clean all part1 part2 run'
+
+mainContent1=$'#include <fcntl.h>
+#include <unistd.h>
+#include <fstream>
 #include <iostream>
+#include <string>
 
+size_t  part1(char *file_name)
+{
+    size_t tot = 0;
+    std::string line;
+
+    std::ifstream	inFile(file_name);
+    if (!inFile.is_open())
+		return (0);
+    while (std::getline(inFile, line))
+    {
+        // ...
+    }
+    return (tot);
+}
+''
 int main( int argc, char **argv)
 {
     if (argc != 2)
         return (1);
-    std::cout << \"tot $PART: \" << $PART(argv[1]) << '\n';
+    std::cout << "tot part1: " << part1(argv[1]) <<  "\n" ;
     return (0);
-}"
+}'
 
-headerContent="#pragma once
-#include <cstddef>
+mainContent2=$'#include <fcntl.h>
+#include <unistd.h>
+#include <fstream>
+#include <iostream>
+#include <string>
 
-size_t  $PART(char *file_name);"
-
-implContent="#include \"$PART.hpp\"
-
-size_t  $PART(char *file_name)
+size_t  part2(char *file_name)
 {
-    
-}"
+    size_t tot = 0;
+    std::string line;
+
+    std::ifstream	inFile(file_name);
+    if (!inFile.is_open())
+		return (0);
+    while (std::getline(inFile, line))
+    {
+        // ...
+    }
+    return (tot);
+}
+''
+int main( int argc, char **argv)
+{
+    if (argc != 2)
+        return (1);
+    std::cout << "tot part2: " << part2(argv[1]) <<  "\n" ;
+    return (0);
+}'
+
+newFolder=day$1
+
 mkdir $newFolder
 cd $newFolder
 touch $newFolder.txt Makefile input_file
-echo $MakefileContent > Makefile
+echo "$MakefileContent" > Makefile
 
-mkdir part1
-cd part1
-touch main.cpp part1.cpp part1.hpp
 PART=1
-# filling header
-echo $MakefileContent >main.cpp
+mkdir part$PART
+cd part$PART
+touch main.cpp
+echo "$mainContent1" >main.cpp 
 
-# filling implementation
-echo $mainContent >part1.cpp
-
-# filling main
-echo $implContent >part1.hpp
-
-cd ..
-mkdir part2
-cd part2
-touch main.cpp part2.cpp part2.hpp
 PART=2
-# filling header
-echo $MakefileContent >main.cpp
-
-# filling implementation
-echo $mainContent >part1.cpp
-
-# filling main
-echo $implContent >part1.hpp
+cd ..
+mkdir part$PART
+cd part$PART
+touch main.cpp
+echo "$mainContent2" >main.cpp 
