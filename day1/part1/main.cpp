@@ -6,22 +6,19 @@
 
 size_t  findNumber(std::string line)
 {
-    auto start = line.begin();
-    auto end = line.end();
-    end--;
-    while (start != end)
-    {
-        if (isdigit(*start) and isdigit(*end))
-            break ;
-        if (! isdigit(*start))
-            start++;
-        if (! isdigit(*end))
-            end--;
-    }
-    if (isdigit(*start) == false)
-        return (0);
-    else
-        return ((*start - '0') * 10 + *end - '0');
+	auto start = line.begin();
+	auto end = line.end();
+	end--;
+	while (start != end)
+	{
+		if (isdigit(*start) and isdigit(*end))
+		   return ((*start - '0') * 10 + *end - '0');
+		if (! isdigit(*start))
+		    start++;
+		if (! isdigit(*end))
+		    end--;
+	}
+	return (0);
 }
 
 size_t  part1(char *file_name)
