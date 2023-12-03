@@ -14,23 +14,24 @@ int build_number(std::string::iterator n_pos)
 	return (n);
 }
 
-bool    check_number(std::string line)
+int    get_index(std::string line)
 {
 	size_t pos_color = 0;
 	std::map<int, std::string> limits = {{12, "red"}, {13, "green"}, {14, "blue"}};
+
 	for(auto limit : limits)
 	{
 		pos_color = line.find(limit.second, 0);
 		while (pos_color != std::string::npos)
 		{
 			if (build_number(line.begin() + pos_color - 2) > limit.first)
-				return (false);
+				return (0);
 			pos_color = line.find(limit.second, pos_color + 1);
 		}
 	}
-	return (true);
-
+	return (build_number(line.begin() + line.find(":") - 1));
 }
+
 size_t  part1(char *file_name)
 {
 	size_t tot = 0;
@@ -40,10 +41,7 @@ size_t  part1(char *file_name)
 	if (!inFile.is_open())
 		return (0);
 	while (std::getline(inFile, line))
-	{
-		if (check_number(line) == true)
-			tot += build_number(line.begin() + line.find(":") - 1);
-	}
+		tot += get_index(line);
 	return (tot);
 }
 
