@@ -55,8 +55,7 @@ int cast_back(const char *line, int pos)
 
 size_t  findNumber(const char* line)
 {
-	int start = 0;
-	int end = strlen(line) - 1;
+	int start = 0, end = strlen(line) - 1;
 	int cast_start = cast_front(line, start), cast_end = cast_back(line, end);
 	while (start < end)
 	{
@@ -67,10 +66,7 @@ size_t  findNumber(const char* line)
 		if (cast_end == -1)
 			cast_end = cast_back(line, --end);
 	}
-	if (cast_start == -1)
-		return (0);
-	else
-		return (cast_start * 10 + cast_end);
+	return (0);
 }
 
 size_t  part2(char *file_name)
