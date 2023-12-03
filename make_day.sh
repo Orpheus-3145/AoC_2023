@@ -126,5 +126,5 @@ PART=2
 cd ..
 mkdir part$PART
 cd part$PART
-touch main.cpp
+touch main.cpp 
 echo "$mainContent2" >main.cpp 
