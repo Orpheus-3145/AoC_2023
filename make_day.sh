@@ -30,16 +30,16 @@ $(PART2): $(MAIN_P2)
 
 part1: $(PART1)
 	@clear
-	@./$(PART1) $(SRC_P1)/$(INPUT)
+	@./$(PART1) $(INPUT)
 
 part2: $(PART2)
 	@clear
-	@./$(PART2) $(SRC_P2)/$(INPUT)
+	@./$(PART2) $(INPUT)
 
 run: all
 	@clear
-	@./$(PART1) $(SRC_P1)/$(INPUT)
-	@./$(PART2) $(SRC_P2)/$(INPUT)
+	@./$(PART1) $(INPUT)
+	@./$(PART2) $(INPUT)
 
 clean:
 	@rm -f $(PART1)
@@ -69,6 +69,7 @@ size_t  part1(char *file_name)
     {
         // ...
     }
+    inFile.close();
     return (tot);
 }
 ''
