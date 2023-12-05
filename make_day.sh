@@ -51,9 +51,7 @@ re: clean all
 
 .PHONY: re clean all part1 part2 run'
 
-mainContent1=$'#include <fcntl.h>
-#include <unistd.h>
-#include <fstream>
+mainContent1=$'#include <fstream>
 #include <iostream>
 #include <string>
 
