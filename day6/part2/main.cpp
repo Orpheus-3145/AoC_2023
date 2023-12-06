@@ -37,7 +37,6 @@ int	get_range(double time, double record)
 
 int  part2(char *file_name)
 {
-	int prod = 1;
 	std::string line;
 	double timing, record;
 
@@ -49,8 +48,7 @@ int  part2(char *file_name)
 	std::getline(inFile, line);
 	record = get_number(line);
 	inFile.close();
-    prod *= get_range(timing, record);
-	return (prod);
+	return (get_range(timing, record));
 }
 
 int main( int argc, char **argv)
