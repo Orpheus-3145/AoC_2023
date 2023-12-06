@@ -79,9 +79,7 @@ int main( int argc, char **argv)
     return (0);
 }'
 
-mainContent2=$'#include <fcntl.h>
-#include <unistd.h>
-#include <fstream>
+mainContent2=$'#include <fstream>
 #include <iostream>
 #include <string>
 
