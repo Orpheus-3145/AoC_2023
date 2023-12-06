@@ -19,14 +19,18 @@ double    get_number(std::string line)
 	return (number);
 }
 
-
+// the requirement is to find which n satisfies: (t - n) * n < r [t=timing, r=record];
+// solving the second degree inequality in n we have that the valid n are the ones inside
+// the open interval (x1, x2):
+// x1 = (t - sqrt(t^2 - 4r)) / 2
+// x2 = (t + sqrt(t^2 - 4r)) / 2
 int	get_range(double time, double record)
 {
 	double min_r, max_r;
 	int count = 0;
 
-	min_r = (time - sqrt(pow(time, 2.) - 4. * record)) / 2. + 0.001;
-	max_r = (time + sqrt(pow(time, 2.) - 4. * record)) / 2. - 0.001;
+	min_r = (time - sqrt(pow(time, 2.) - 4. * record)) / 2. + 0.00001;	// + and - 0.00001 to have the open interval
+	max_r = (time + sqrt(pow(time, 2.) - 4. * record)) / 2. - 0.00001;
 	for (count=0; count < max_r - ceil(min_r);count++);
 	return (count);
 }
