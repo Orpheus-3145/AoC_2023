@@ -27,12 +27,10 @@ double    get_number(std::string line)
 int	get_range(double time, double record)
 {
 	double min_r, max_r;
-	int count = 0;
 
-	min_r = (time - sqrt(pow(time, 2.) - 4. * record)) / 2. + 0.00001;	// + and - 0.00001 to have the open interval
-	max_r = (time + sqrt(pow(time, 2.) - 4. * record)) / 2. - 0.00001;
-	for (count=0; count < max_r - ceil(min_r);count++);
-	return (count);
+	min_r = (time - sqrt(pow(time, 2.) - 4. * record)) / 2.;
+	max_r = (time + sqrt(pow(time, 2.) - 4. * record)) / 2.;
+	return (ceil(max_r) - floor(min_r) - 1);
 }
 
 int  part2(char *file_name)
