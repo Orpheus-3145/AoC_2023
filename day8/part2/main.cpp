@@ -1,6 +1,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <numeric>
+#include <cmath>
 #include <vector>
 #include <unordered_map>
 
@@ -33,39 +35,36 @@ void fill_nodes_seq(std::ifstream& fd, umap_t& nodes, std::string seq )
     }
 }
 
-bool is_over(std::vector<node_t>& currentz)
+size_t lcm(size_t a, size_t b)
 {
-    for (auto item : currentz)
-    {
-        if (item.name.back() != 'Z')
-            return (false);
-    }
-    return (true);
+    return (a * b / std::gcd(a, b));
 }
 
 size_t find_end(umap_t& nodes, std::string seq)
 {
-    size_t count=0, i=0, max_size=seq.size();
-    std::vector<node_t> currentz;
+    size_t count, i, curr_lcm=1;
+    node_t current;
 
     for (auto item : nodes)
     {
         if (item.first.back() == 'A')
-            currentz.push_back(item.second);
-    }
-    while (is_over(currentz) == false)
-    {
-        for (size_t j=0; j<currentz.size(); j++)
         {
-            if (seq[i] == 'L')
-                currentz[j] = nodes[currentz[j].left];
-            else if (seq[i] == 'R')
-                currentz[j] = nodes[currentz[j].right];
+            i = 0;
+            count = 0;
+            current = item.second;
+            while (current.name.back() != 'Z')
+            {
+                if (seq[i] == 'L')
+                    current = nodes[current.left];
+                else if (seq[i] == 'R')
+                    current = nodes[current.right];
+                count++;
+                i = (i + 1) % seq.size();
+            }
+            curr_lcm = lcm(curr_lcm, count);
         }
-        count++;
-        i = (i + 1) % max_size;
     }
-    return (count);
+    return (curr_lcm);
 }
 
 size_t  part2(char *file_name)
