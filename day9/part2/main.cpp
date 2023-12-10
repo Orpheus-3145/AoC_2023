@@ -17,10 +17,8 @@ bool    check_line(std::vector<long> line)
 long extrapolate(std::string line)
 {
     std::istringstream  iss(line);
-	long  		        count=0, n=0;
-	std::vector<long>   increments;
-	std::vector<long>   new_row;
-	std::vector<long>   firsts;
+	long  		    count=0, n=0;
+	std::vector<long>   increments, new_row, firsts;
 
     while(iss >> n)
         new_row.push_back(n);
@@ -36,7 +34,7 @@ long extrapolate(std::string line)
 		increments.clear();
 	}
         for (auto it=firsts.rbegin(); it!=firsts.rend(); it++)
-        count = *it - count;
+        	count = *it - count;
 	return (count);
 }
 
